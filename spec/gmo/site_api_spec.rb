@@ -190,4 +190,93 @@ describe "GMO::Payment::SiteAPI" do
     end
   end
 
+  describe "#exec_tran" do
+    it "gets data about a transaction", :vcr do
+      shop = GMO::Payment::ShopAPI.new({
+        :shop_id   => SPEC_CONF["shop_id"],
+        :shop_pass => SPEC_CONF["shop_pass"],
+        :host      => SPEC_CONF["host"]
+      })
+
+      order_id = generate_id
+
+      entry = shop.entry_tran(
+        :order_id => order_id,
+        :job_cd   => "CAPTURE",
+        :amount   => 100
+      )
+      access_id   = entry["AccessID"]
+      access_pass = entry["AccessPass"]
+
+      member_id = generate_id
+
+      @service.save_member(
+        :member_id   => member_id,
+        :member_name => "foo bar"
+      )
+
+      @service.save_card(
+        :member_id => member_id,
+        :card_no   => '4111111111111111',
+        :expire    => '1405'
+      )
+
+      result = @service.exec_tran(
+        :access_id   => access_id,
+        :access_pass => access_pass,
+        :order_id    => order_id,
+        :member_id   => member_id,
+        :card_seq    => "0",
+        :method      => "1"
+      )
+
+      result["TranID"].nil?.should_not be_true
+      result["TranDate"].nil?.should_not be_true
+      result["CheckString"].nil?.should_not be_true
+    end
+
+    it "got_error_if_missing_options", :vcr do
+      shop = GMO::Payment::ShopAPI.new({
+        :shop_id   => SPEC_CONF["shop_id"],
+        :shop_pass => SPEC_CONF["shop_pass"],
+        :host      => SPEC_CONF["host"]
+      })
+
+      order_id = generate_id
+
+      entry = shop.entry_tran(
+        :order_id => order_id,
+        :job_cd   => "CAPTURE",
+        :amount   => 100
+      )
+      access_id   = entry["AccessID"]
+      access_pass = entry["AccessPass"]
+
+      member_id = generate_id
+
+      @service.save_member(
+        :member_id   => member_id,
+        :member_name => "foo bar"
+      )
+
+      @service.save_card(
+        :member_id => member_id,
+        :card_no   => '4111111111111111',
+        :expire    => '1405'
+      )
+
+      lambda {
+        result = @service.exec_tran(
+          :access_id   => access_id,
+          :access_pass => access_pass,
+          :order_id    => order_id,
+          :member_id   => member_id,
+          :card_seq    => "0",
+          # :method      => "1"
+        )
+      }.should raise_error("ErrCode=E01&ErrInfo=E01260001")
+
+    end
+  end
+
 end

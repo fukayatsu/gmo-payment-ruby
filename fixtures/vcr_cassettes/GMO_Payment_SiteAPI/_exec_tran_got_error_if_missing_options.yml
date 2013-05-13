@@ -1,0 +1,127 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://<HOST>/payment/EntryTran.idPass
+    body:
+      encoding: UTF-8
+      string: OrderID=1368443831&JobCd=CAPTURE&Amount=100&ShopID=<SHOP_ID>&ShopPass=<SHOP_PASS>
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 13 May 2013 11:17:11 GMT
+      Connection:
+      - close
+      Content-Type:
+      - text/plain;charset=Windows-31J
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: AccessID=5af295ed0e0cb64472b486d096ebd3a1&AccessPass=521eb723596308dbdeedd5edeaa4bf03
+    http_version: 
+  recorded_at: Mon, 13 May 2013 11:17:12 GMT
+- request:
+    method: post
+    uri: https://<HOST>/payment/SaveMember.idPass
+    body:
+      encoding: UTF-8
+      string: MemberID=1368443832&MemberName=foo+bar&SiteID=<SITE_ID>&SitePass=<SITE_PASS>
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 13 May 2013 11:17:12 GMT
+      Connection:
+      - close
+      Content-Type:
+      - text/plain;charset=Windows-31J
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: MemberID=1368443832
+    http_version: 
+  recorded_at: Mon, 13 May 2013 11:17:12 GMT
+- request:
+    method: post
+    uri: https://<HOST>/payment/SaveCard.idPass
+    body:
+      encoding: UTF-8
+      string: MemberID=1368443832&CardNo=4111111111111111&Expire=1405&SiteID=<SITE_ID>&SitePass=<SITE_PASS>
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 13 May 2013 11:17:12 GMT
+      Connection:
+      - close
+      Content-Type:
+      - text/plain;charset=Windows-31J
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: CardSeq=0&CardNo=*************111&Forward=2a99662
+    http_version: 
+  recorded_at: Mon, 13 May 2013 11:17:13 GMT
+- request:
+    method: post
+    uri: https://<HOST>/payment/ExecTran.idPass
+    body:
+      encoding: UTF-8
+      string: AccessID=5af295ed0e0cb64472b486d096ebd3a1&AccessPass=521eb723596308dbdeedd5edeaa4bf03&OrderID=1368443831&MemberID=1368443832&CardSeq=0&SiteID=<SITE_ID>&SitePass=<SITE_PASS>
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 13 May 2013 11:17:13 GMT
+      Connection:
+      - close
+      Content-Type:
+      - text/plain;charset=Windows-31J
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: ErrCode=E01&ErrInfo=E01260001
+    http_version: 
+  recorded_at: Mon, 13 May 2013 11:17:13 GMT
+recorded_with: VCR 2.4.0
