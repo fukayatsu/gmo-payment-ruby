@@ -274,7 +274,7 @@ describe "GMO::Payment::SiteAPI" do
           :card_seq    => "0",
           # :method      => "1"
         )
-      }.should raise_error("ErrCode=E01&ErrInfo=E01260001")
+      }.should raise_error(ArgumentError)
 
     end
   end
